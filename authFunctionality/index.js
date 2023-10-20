@@ -10,6 +10,8 @@ const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD
 
 const app = express()
 
+app.use(express.json())
+
 const start = async () => {
   try {
     await mongoose.connect(`mongodb+srv://${DATABASE_USER}:${DATABASE_PASSWORD}@maincluster.e5okmwd.mongodb.net/?retryWrites=true&w=majority`)
