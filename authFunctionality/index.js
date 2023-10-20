@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const authRouter = require('./authRouter')
+const authController = require('./authController')
 
 dotenv.config()
 
