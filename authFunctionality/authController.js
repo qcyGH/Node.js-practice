@@ -8,6 +8,7 @@ class authController {
 
     } catch (error) {
       console.error(error)
+      res.status(400).json({message: 'Registration error'})
     }
   }
 
@@ -16,6 +17,7 @@ class authController {
 
     } catch (error) {
       console.error(error)
+      res.status(400).json({message: 'Login error'})
     }
   }
 
@@ -25,6 +27,7 @@ class authController {
       res.json('Server work')
     } catch (error) {
       console.error(error)
+      res.status(400).json({message: 'Get users error'})
     }
   }
 }
