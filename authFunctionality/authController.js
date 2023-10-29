@@ -1,8 +1,22 @@
 const User = require('./models/User')
 const Role = require('./models/Role')
-const bcrypt = require ('bcrypt')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
 const { validationResult } = require('express-validator')
 
+dotenv.config()
+
+const generateAccessToken = (id, roles) => {
+  const payload = {
+    id,
+    roles
+  }
+
+  const secretKey = process.env.JWT_SECRET_KEY
+
+  return jwt.sign(payload, secretKey, {expiresIn: '24h'})
+}
 class authController {
 
   async registration (req, res) {
@@ -35,6 +49,21 @@ class authController {
 
   async login (req, res) {
     try {
+      const { username, password } = req.body
+
+      const user = await User.findOne({username})
+      if (!user) {
+        return res.status(400).json({message: `User "${username}" not found`})
+      }
+
+      const validPassword = bcrypt.compareSync(password, user.password)
+      if (!validPassword) {
+        return res.status(400).json({message: `Password is incorrect`})
+      }
+
+      const token = generateAccessToken(user._id, user.roles)
+
+      return res.json({token})
 
     } catch (error) {
 
