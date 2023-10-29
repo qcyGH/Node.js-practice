@@ -5,8 +5,6 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const { validationResult } = require('express-validator')
 
-dotenv.config()
-
 const generateAccessToken = (id, roles) => {
   const payload = {
     id,
